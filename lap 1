@@ -1,0 +1,15 @@
+cat_a=[1,2,3,4,5]
+cat_b=[10,20,30]
+
+def calculate_stats(data):
+
+    a=max(data)
+    mean =sum(data)/len(data)
+    return a,mean
+
+
+stats_a = calculate_stats(cat_a)
+stats_b = calculate_stats(cat_b)
+
+print("A:",stats_a)
+print("B:",stats_b)

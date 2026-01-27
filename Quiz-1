@@ -1,0 +1,11 @@
+def pul_11(*num):
+    print(sum(num))
+def pul_12(func):
+    def wrapper(*num):
+        print(sum(num)/len(num))
+        print(min(num)*max(num))
+    return wrapper
+
+pul_11 = pul_12(pul_11)
+
+pul_11(1,2,3,4,5)

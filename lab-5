@@ -1,0 +1,44 @@
+import json
+
+training_settings = {
+    "model_name": "resnet18",
+    "num_epochs": 20,
+    "batch_size": 64,
+    "lr": 0.001
+}
+
+# Save settings to JSON file
+with open("training_config.json", "w") as file:
+    json.dump(training_settings, file, indent=4)
+
+print("Training configuration saved successfully.")
+
+
+with open("training_config.json", "r") as file:
+    config_data = json.load(file)
+
+print("\nLoaded configuration:")
+print(config_data)
+
+
+print(
+    f"\nStarting training for model: {config_data['model_name']}"
+)
+print(f"Epochs: {config_data['num_epochs']}")
+
+# Fake training results
+training_output = {
+    "model": config_data["model_name"],
+    "final_accuracy": 0.95,
+    "final_loss": 0.04
+}
+
+with open("training_results.json", "w") as file:
+    json.dump(training_output, file, indent=4)
+
+print("\nTraining results saved.")
+with open("training_results.json", "r") as file:
+    results_check = json.load(file)
+
+print("Saved Results:")
+print(results_check)

@@ -1,0 +1,44 @@
+import pandas as pd
+import numpy as np
+
+data = {
+    "product": ["Widget A", "Widget B", "Widget C"],
+    "price": ["$1,234.50", "$567.89", "$2,345.00"],
+    "quantity": [10, 5, None]
+}
+
+df = pd.DataFrame(data)
+
+print("Shape:", df.shape)
+print("\nData Types:\n", df.dtypes)
+print("\nPreview:\n", df.head())
+
+df["price"] = df["price"].apply(
+    lambda x: float(x.replace("$", "").replace(",", ""))
+)
+
+df["quantity"] = df["quantity"].apply(
+    lambda x: 0 if pd.isna(x) else x
+)
+
+
+df["total"] = df.apply(
+    lambda row: row["price"] * row["quantity"],
+    axis=1
+)
+
+def price_category(price):
+    if price < 1000:
+        return "low"
+    elif price < 2000:
+        return "med"
+    else:
+        return "high"
+
+df["price_category"] = df["price"].apply(
+    lambda x: price_category(x)
+)
+
+print("\nFinal DataFrame:\n")
+print(df)
+

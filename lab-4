@@ -1,0 +1,72 @@
+students = {
+    "S001": {
+        "name": "Alice Chen",
+        "courses": {
+            "CS101": {"grade": 92, "credits": 3},
+            "MATH201": {"grade": 88, "credits": 4},
+            "AI301": {"grade": 95, "credits": 3}
+        },
+        "advisor": "Dr. Smith"
+    },
+    "S002": {
+        "name": "Bob Lee",
+        "courses": {
+            "CS101": {"grade": 85, "credits": 3},
+            "MATH201": {"grade": 90, "credits": 4},
+            "AI301": {"grade": 87, "credits": 3}
+        },
+        "advisor": "Dr. Brown"
+    }
+}
+
+
+alice_ai_grade = students["S001"]["courses"]["AI301"]["grade"]
+print("1) Alice AI301 Grade:", alice_ai_grade)
+
+
+def calculate_gpa(courses):
+    total_points = 0
+    total_credits = 0
+
+    for course in courses.values():
+        total_points += course["grade"] * course["credits"]
+        total_credits += course["credits"]
+
+    return total_points / total_credits
+
+
+bob_gpa = calculate_gpa(students["S002"]["courses"])
+print("2) Bob GPA:", round(bob_gpa, 2))
+
+
+cs101_students = []
+
+for student in students.values():
+    if "CS101" in student["courses"]:
+        cs101_students.append(student["name"])
+
+print("3) Students in CS101:", cs101_students)
+
+total_grades = 0
+count = 0
+
+for student in students.values():
+    for course in student["courses"].values():
+        total_grades += course["grade"]
+        count += 1
+
+average_grade = total_grades / count
+print("4) Average Grade:", round(average_grade, 2))
+
+
+best_student = None
+highest_gpa = 0
+
+for student in students.values():
+    gpa = calculate_gpa(student["courses"])
+    if gpa > highest_gpa:
+        highest_gpa = gpa
+        best_student = student["name"]
+
+print("5) Highest GPA Student:", best_student)
+print("   GPA:", round(highest_gpa, 2))

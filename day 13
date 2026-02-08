@@ -1,0 +1,30 @@
+import pandas as pd
+import time
+df=pd.read_csv(r"C:\Users\acer67\Downloads\day14_users_raw.csv",chunksize=2)
+total_rows, sum_income = 0, 0.0
+
+for chunk in df:
+ chunk['income']=chunk['income'].clip(upper=chunk["income"].quantile(0.99))
+def clean_types(df):
+    out = df.copy()
+    out["age"] = pd.to_numeric(out["age"],
+errors="coerce")
+    out["income"] =pd.to_numeric(out["income"], errors="coerce")
+    return out
+
+def clean_missing(df):
+    out = df.copy()
+    out["age"] =(out["age"].fillna(out["age"].median()))
+    return out
+def clean_data(df):
+
+    df = clean_types(df)
+
+    df = clean_missing(df)
+
+    return df
+start_time = time.perf_counter()
+...
+elapsed = time.perf_counter() - start_time
+
+print(f"Elapsed time: {elapsed}")

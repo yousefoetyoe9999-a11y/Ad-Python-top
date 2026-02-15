@@ -1,0 +1,32 @@
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
+
+file_path = r"C:\Users\acer67\Downloads\day17_scaling.csv"
+df = pd.read_csv(file_path)
+
+print("البيانات الأصلية:")
+print(df.head())
+
+numeric_cols = df.select_dtypes(include=['int64', 'float64']).columns
+
+minmax_scaler = MinMaxScaler()
+standard_scaler = StandardScaler()
+robust_scaler = RobustScaler()
+
+df_minmax = df.copy()
+df_minmax[numeric_cols] = minmax_scaler.fit_transform(df[numeric_cols])
+
+df_standard = df.copy()
+df_standard[numeric_cols] = standard_scaler.fit_transform(df[numeric_cols])
+
+df_robust = df.copy()
+df_robust[numeric_cols] = robust_scaler.fit_transform(df[numeric_cols])
+
+print("\nملخص البيانات بعد Min-Max Scaling:")
+print(df_minmax.describe())
+
+print("\nملخص البيانات بعد Standard Scaling:")
+print(df_standard.describe())
+
+print("\nملخص البيانات بعد Robust Scaling:")
+print(df_robust.describe())

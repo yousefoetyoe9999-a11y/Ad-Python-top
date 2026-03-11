@@ -1,0 +1,33 @@
+import pandas as pd
+
+df = pd.read_csv(r"C:\Users\Administrator\Downloads\day37_dot.csv")
+
+print("Data overview:")
+print(df.head())
+
+a = df[['a1', 'a2', 'a3']].values[0]
+b = df[['b1', 'b2', 'b3']].values[0]
+
+print(f"\nVector a: {a}")
+print(f"Vector b: {b}")
+
+dot_product = np.dot(a, b)
+print(f"\nDot product: {dot_product}")
+
+norm_a = np.linalg.norm(a)
+norm_b = np.linalg.norm(b)
+
+cosine_similarity = dot_product / (norm_a * norm_b)
+print(f"\nNorm of a: {norm_a:.2f}")
+print(f"Norm of b: {norm_b:.2f}")
+print(f"\nCosine similarity: {cosine_similarity:.4f}")
+
+print("\nInterpretation:")
+if cosine_similarity > 0.9:
+    print("Vectors are highly similar (same direction)")
+elif cosine_similarity > 0:
+    print("Vectors point in similar direction")
+elif cosine_similarity == 0:
+    print("Vectors are orthogonal (perpendicular)")
+else:
+    print("Vectors point in opposite directions")

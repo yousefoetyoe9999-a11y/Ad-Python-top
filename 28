@@ -1,0 +1,28 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('data/day28_groupby.csv')
+
+print("Data overview:")
+print(df.head())
+
+print("\nGroup by region:")
+print(df.groupby('region')['sales'].agg(['mean', 'sum', 'count']))
+
+print("\nGroup by region and segment:")
+print(df.groupby(['region', 'segment'])['sales'].mean())
+
+grouped = df.groupby('region')['sales'].mean()
+
+plt.figure(figsize=(10, 5))
+grouped.plot(kind='bar', edgecolor='black', alpha=0.7)
+plt.title('Mean sales by region')
+plt.xlabel('Region')
+plt.ylabel('Mean Sales')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+print("\nSummary:")
+print(grouped)

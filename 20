@@ -1,0 +1,27 @@
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+
+df = pd.read_csv('data/day20_integration.csv')
+
+print("Baseline stats:")
+print(df.describe())
+
+df['pages_per_minute'] = df['pages_viewed'] / df['session_minutes']
+df['log_basket'] = np.log1p(df['basket_value'])
+
+df = pd.get_dummies(df, columns=['city', 'device_type'])
+
+scaler = StandardScaler()
+df[['pages_viewed', 'session_minutes', 'basket_value']] = scaler.fit_transform(
+    df[['pages_viewed', 'session_minutes', 'basket_value']]
+)
+
+print("\nAfter engineering:")
+print(df.describe())
+
+print("\nFinal columns:")
+print(df.columns.tolist())
+
+print("\nFinal data:")
+print(df.head())

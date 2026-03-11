@@ -1,0 +1,41 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('data/day29_correlations.csv')
+
+print("Data overview:")
+print(df.head())
+
+corr = df.corr()
+print("\nCorrelation matrix:")
+print(corr)
+
+plt.figure(figsize=(8, 6))
+sns.heatmap(corr, annot=True, cmap='coolwarm', center=0, linewidths=1)
+plt.title('Correlation Heatmap')
+plt.tight_layout()
+plt.show()
+
+corr_flat = corr.abs().unstack().sort_values(ascending=False)
+corr_flat = corr_flat[corr_flat < 1]
+print(f"\nTop correlations:")
+print(corr_flat.head(6))
+
+strong_pair = corr_flat.index[0]
+weak_pair = corr_flat.index[-1]
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+axes[0].scatter(df[strong_pair[0]], df[strong_pair[1]], alpha=0.7)
+axes[0].set_xlabel(strong_pair[0])
+axes[0].set_ylabel(strong_pair[1])
+axes[0].set_title(f'Strong correlation: {corr.loc[strong_pair[0], strong_pair[1]]:.2f}')
+
+axes[1].scatter(df[weak_pair[0]], df[weak_pair[1]], alpha=0.7)
+axes[1].set_xlabel(weak_pair[0])
+axes[1].set_ylabel(weak_pair[1])
+axes[1].set_title(f'Weak correlation: {corr.loc[weak_pair[0], weak_pair[1]]:.2f}')
+
+plt.tight_layout()
+plt.show()

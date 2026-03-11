@@ -1,0 +1,24 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = pd.read_csv(r"C:\Users\Administrator\Downloads\day32_relationships.csv")
+
+print("Data overview:")
+print(df.head())
+print(f"\nColumns: {df.columns.tolist()}")
+
+fig, ax = plt.subplots(figsize=(10, 6))
+sns.scatterplot(data=df, x=df.columns[0], y=df.columns[1],
+                hue=df.columns[2], style=df.columns[2],
+                size=df.columns[2] if df[df.columns[2]].dtype in ['int64', 'float64'] else None,
+                ax=ax)
+plt.title('Scatterplot with Multiple Variables')
+plt.tight_layout()
+plt.show()
+
+sns.relplot(data=df, x=df.columns[0], y=df.columns[1],
+            hue=df.columns[2], col=df.columns[2],
+            kind='scatter', height=4, aspect=1.2)
+plt.tight_layout()
+plt.show()

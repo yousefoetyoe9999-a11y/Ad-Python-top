@@ -1,0 +1,47 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('data/day26_distributions.csv')
+
+print("Summary stats:")
+print(df.describe())
+print(f"\nMean:\n{df.mean()}")
+print(f"\nMedian:\n{df.median()}")
+print(f"\nStd:\n{df.std()}")
+print(f"\nSkewness:\n{df.skew()}")
+
+fig, axes = plt.subplots(len(df.columns), 2, figsize=(12, len(df.columns)*3))
+
+for i, col in enumerate(df.columns):
+    df[col].hist(bins=20, ax=axes[i, 0], edgecolor='black', alpha=0.7)
+    axes[i, 0].set_title(f'{col} - Histogram')
+    axes[i, 0].set_xlabel(col)
+
+    df[col].plot(kind='kde', ax=axes[i, 1])
+    axes[i, 1].set_title(f'{col} - KDE')
+    axes[i, 1].set_xlabel(col)
+
+plt.tight_layout()
+plt.show()
+
+skewed_col = df.skew().abs().idxmax()
+print(f"\nMost skewed column: {skewed_col} (skew: {df[skewedcol].skew():.2f})")
+
+df['log' + skewed_col] = np.log1p(df[skewed_col])
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+
+df[skewed_col].hist(bins=20, ax=axes[0], edgecolor='black', alpha=0.7)
+axes[0].set_title(f'Original {skewedcol}')
+
+df['log' + skewed_col].hist(bins=20, ax=axes[1], edgecolor='black', alpha=0.7)
+axes[1].set_title(f'Log Transformed {skewed_col}')
+
+plt.tight_layout()
+plt.show()
+
+print(f"\nAfter log1p:")
+print(f"Original skew: {df[skewedcol].skew():.2f}")
+print(f"Log skew: {df['log' + skewed_col].skew():.2f}")

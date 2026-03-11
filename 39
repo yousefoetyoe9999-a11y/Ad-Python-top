@@ -1,0 +1,22 @@
+import numpy as np
+
+X = np.array([
+    [3.0, 4.0],
+    [1.0, 2.0],
+    [0.0, 5.0],
+])
+
+print("Original matrix:")
+print(X)
+
+row_norms = np.linalg.norm(X, axis=1, keepdims=True)
+print("\nRow norms:")
+print(row_norms)
+
+X_normalized = X / row_norms
+print("\nNormalized matrix:")
+print(X_normalized)
+
+verification_norms = np.linalg.norm(X_normalized, axis=1)
+print("\nVerification (each row should have norm ~1.0):")
+print(verification_norms)

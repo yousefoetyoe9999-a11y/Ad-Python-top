@@ -1,0 +1,26 @@
+import numpy as np
+import pandas as pd
+
+X = pd.read_csv(r'C:\Users\Administrator\Downloads\day38_matrices_X\day38_matrices_X.csv').values
+W = pd.read_csv(r'C:\Users\Administrator\Downloads\day38_matrices_X\day38_matrices_W.csv').values
+
+print("Matrix X:")
+print(X)
+print(f"X shape: {X.shape}")
+
+print("\nMatrix W:")
+print(W)
+print(f"W shape: {W.shape}")
+
+Y = X @ W
+print("\nY = X @ W:")
+print(Y)
+print(f"Y shape: {Y.shape}")
+
+print("\nTranspose of X:")
+print(X.T)
+print(f"X.T shape: {X.T.shape}")
+
+print("\nTranspose of W:")
+print(W.T)
+print(f"W.T shape: {W.T.shape}")

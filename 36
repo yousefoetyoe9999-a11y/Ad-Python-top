@@ -1,0 +1,32 @@
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv(r"C:\Users\Administrator\Downloads\day34_patterns.csv")
+
+print("Data overview:")
+print(df.head())
+
+feature = df['value'].values
+weights = np.array([0.05, 0.8, -0.1, 0.2, 0.15])
+
+print("\nfeature shape:", feature.shape)
+print("weights shape:", weights.shape)
+
+print("\nfeature vector:")
+print(feature)
+print("\nweights vector:")
+print(weights)
+
+addition = feature + weights
+print("\nVector addition:")
+print(addition)
+
+scaled = feature * 2
+print("\nScalar multiplication (feature * 2):")
+print(scaled)
+
+feature_norm = np.linalg.norm(feature)
+weights_norm = np.linalg.norm(weights)
+
+print(f"\nFeature norm: {feature_norm:.2f}")
+print(f"Weights norm: {weights_norm:.2f}")

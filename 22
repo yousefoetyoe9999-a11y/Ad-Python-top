@@ -1,0 +1,16 @@
+import pandas as pd
+
+df = pd.read_csv('data/day22_interactions.csv')
+
+print("Original data:")
+print(df)
+
+df['multiplicative'] = df['feature1'] * df['feature2']
+df['additive'] = df['feature1'] + df['feature2']
+df['logical'] = df['feature1'] * df['flag']
+
+print("\nWith interactions:")
+print(df)
+
+print("\nCorrelations with target:")
+print(df.corr()['target'].sort_values(ascending=False))

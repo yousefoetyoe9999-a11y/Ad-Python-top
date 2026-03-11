@@ -1,0 +1,23 @@
+import numpy as np
+
+n_trials = 10000
+
+coin_flips = np.random.choice(['H', 'T'], size=n_trials)
+heads_count = np.sum(coin_flips == 'H')
+prob_heads = heads_count / n_trials
+
+print("Coin Flip Simulation:")
+print(f"Trials: {n_trials}")
+print(f"Heads: {heads_count}")
+print(f"Empirical P(Heads): {prob_heads:.4f}")
+print(f"Theoretical P(Heads): 0.5000")
+
+dice_rolls = np.random.randint(1, 7, size=n_trials)
+six_count = np.sum(dice_rolls == 6)
+prob_six = six_count / n_trials
+
+print("\nDice Roll Simulation:")
+print(f"Trials: {n_trials}")
+print(f"Sixes: {six_count}")
+print(f"Empirical P(Six): {prob_six:.4f}")
+print(f"Theoretical P(Six): {1/6:.4f}")

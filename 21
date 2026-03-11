@@ -1,0 +1,21 @@
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv('data/day21_housing.csv')
+
+print("Basic stats:")
+print(df.describe())
+
+df['price_per_sqft'] = np.where(df['sqft'] > 0, df['price'] / df['sqft'], 0)
+
+df['rooms_total'] = df['bedrooms'] + df['bathrooms']
+df['sqft_per_room'] = np.where(df['rooms_total'] > 0, df['sqft'] / df['rooms_total'], 0)
+
+print("\nWith domain features:")
+print(df[['price', 'price_per_sqft', 'rooms_total', 'sqft_per_room']])
+
+print("\nDomain features stats:")
+print(df[['price_per_sqft', 'rooms_total', 'sqft_per_room']].describe())
+
+print("\nCorrelation with price:")
+print(df.corr()['price'].sort_values(ascending=False))

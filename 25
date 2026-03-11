@@ -1,0 +1,39 @@
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.feature_selection import VarianceThreshold
+
+df = pd.read_csv('data/day25_project.csv')
+
+print("Original features:")
+print(df.head())
+
+df['price_per_sqft'] = df['price'] / df['sqft']
+df['sqft_per_room'] = df['sqft'] / df['rooms']
+df['log_price'] = np.log1p(df['price'])
+df['sqrt_sqft'] = np.sqrt(df['sqft'])
+
+df['sqft_rooms_interaction'] = df['sqft'] * df['rooms']
+
+poly = PolynomialFeatures(degree=2, include_bias=False)
+poly_features = poly.fit_transform(df[['sqft', 'rooms']])
+poly_df = pd.DataFrame(poly_features, columns=poly.get_feature_names_out(['sqft', 'rooms']))
+
+df = pd.concat([df, poly_df], axis=1)
+
+print("\nAfter feature engineering:")
+print(f"Total features: {df.shape[1]}")
+
+vt = VarianceThreshold(threshold=0.01)
+X_selected = vt.fit_transform(df.drop('price', axis=1))
+selected_cols = df.drop('price', axis=1).columns[vt.get_support()].tolist()
+
+df_final = df[['price'] + selected_cols]
+
+print(f"\nAfter variance threshold: {len(selected_cols)} features")
+
+df_final.to_csv('data/day25_engineered.csv', index=False)
+
+print("\nFinal columns:")
+print(df_final.columns.tolist())
+print("\nSaved to data/day25_engineered.csv")

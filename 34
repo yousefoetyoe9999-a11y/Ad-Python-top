@@ -1,0 +1,32 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
+
+df = pd.read_csv(r"C:\Users\Administrator\Downloads\day34_patterns.csv")
+
+print("Data overview:")
+print(df.head())
+print(f"\nColumns: {df.columns.tolist()}")
+
+g = sns.relplot(data=df, x=df.columns[0], y=df.columns[1],
+                col=df.columns[2] if len(df.columns) > 2 else None,
+                hue=df.columns[2] if len(df.columns) > 2 else None,
+                kind='scatter', height=4, aspect=1.2)
+g.fig.suptitle('Faceted Scatter Plot', y=1.02)
+plt.tight_layout()
+plt.show()
+
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=df, x=df.columns[0], y=df.columns[1],
+                hue=df.columns[2] if len(df.columns) > 2 else None)
+sns.regplot(data=df, x=df.columns[0], y=df.columns[1],
+            scatter=False, color='red', label='Trend')
+plt.title('Scatter Plot with Trend Overlay')
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+print("\nPattern analysis:")
+print(df.groupby(df.columns[2])[df.columns[1]].agg(['mean', 'std', 'count'])
+      if len(df.columns) > 2 else df.describe())

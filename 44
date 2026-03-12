@@ -1,0 +1,21 @@
+import numpy as np
+
+def softmax_stable(x):
+    x_shifted = x - np.max(x)
+    exp_x = np.exp(x_shifted)
+    return exp_x / np.sum(exp_x)
+
+scores = np.array([2.0, 1.0, 0.1])
+
+print("Original scores:")
+print(scores)
+
+probs = softmax_stable(scores)
+
+print("\nSoftmax probabilities:")
+print(probs)
+
+print(f"\nSum of probabilities: {np.sum(probs):.6f}")
+
+print("\nLog probabilities:")
+print(np.log(probs))

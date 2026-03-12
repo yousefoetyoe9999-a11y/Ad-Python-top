@@ -1,0 +1,21 @@
+import numpy as np
+from scipy import stats
+
+mu, sigma = 0, 1
+dist = stats.norm(mu, sigma)
+
+a, b = -1, 1
+prob_cdf = dist.cdf(b) - dist.cdf(a)
+print(f"CDF method: P({a} <= X <= {b}) = {prob_cdf:.4f}")
+
+q25 = dist.ppf(0.25)
+q75 = dist.ppf(0.75)
+print(f"\n25th percentile: {q25:.4f}")
+print(f"75th percentile: {q75:.4f}")
+
+n_samples = 100000
+samples = np.random.normal(mu, sigma, n_samples)
+prob_mc = np.sum((samples >= a) & (samples <= b)) / n_samples
+print(f"\nMonte Carlo: P({a} <= X <= {b}) = {prob_mc:.4f}")
+
+print(f"\nDifference: {abs(prob_cdf - prob_mc):.4f}")
